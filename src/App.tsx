@@ -46,14 +46,14 @@ function App() {
         <br />
 
         <label htmlFor="confirmasenha">Confirme a senha:
-        <input type="password" id="confirmasenha" name="confirmasenha" data-testid="confirmasenha"
+        <input type="password" id="confirmasenha" name="confirmaSenha" data-testid="confirmaSenha"
            value={dadosUsuario.confirmaSenha}
            onChange={e => setDadosUsuario({ ...dadosUsuario, confirmaSenha: e.target.value })}/>
         </label>
         {dadosUsuario.confirmaSenha}
         <br />
 
-        <button type="submit" data-testid="botaoregistrar" onClick={handleSubmit}>Registrar</button>
+        <button type="submit" data-testid="botaoRegistrar" onClick={handleSubmit}>Registrar</button>
       </form>
     </div>
   )
