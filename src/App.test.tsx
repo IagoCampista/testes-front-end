@@ -152,7 +152,40 @@ describe('RegisterTest', () => {
 
     fireEvent.change(emailInput, { target: { value: 'emailvalido@email.com' } });   
     expect(emailInput.validity.valid).toBeTruthy();
+    });
 
+    it('testa se a senha é valida', () => {
+    window.alert = jest.fn()
+    render(<App />);
+    const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+    const emailInput = screen.getByTestId('email') as HTMLInputElement;
+    const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+    const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+    const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+    fireEvent.change(nomeInput, { target: { value: 'Jorge Cambalhota' } })
+    fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+    
+    
+    fireEvent.change(senhaInput, { target: { value: 'curta' } })
+    fireEvent.change(confirmaSenhaInput, { target: { value: 'curta' } })
+    fireEvent.click(botaoRegistrar)       
+    expect(window.alert).toHaveBeenCalledWith('A senha não é válida!');
+
+    fireEvent.change(senhaInput, { target: { value: 'senhasemletramaiuscula' } })
+    fireEvent.change(confirmaSenhaInput, { target: { value: 'senhasemletramaiuscula' } })
+    fireEvent.click(botaoRegistrar) 
+    expect(window.alert).toHaveBeenCalledWith('A senha não é válida!');
+
+    fireEvent.change(senhaInput, { target: { value: 'senhaSemNumero' } })
+    fireEvent.change(confirmaSenhaInput, { target: { value: 'senhaSemNumero' } })
+    fireEvent.click(botaoRegistrar) 
+    expect(window.alert).toHaveBeenCalledWith('A senha não é válida!');
+
+    fireEvent.change(senhaInput, { target: { value: 'SenhaCorreta123' } })
+    fireEvent.change(confirmaSenhaInput, { target: { value: 'SenhaCorreta123' } })
+    fireEvent.click(botaoRegistrar) 
+    expect(window.alert).not.toHaveBeenCalledWith();
     });
     
 })

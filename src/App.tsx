@@ -22,6 +22,12 @@ function App() {
         alert("As senhas não coincidem!")
         return
       }
+
+      if (checarSenhaValida(dadosUsuario.senha)){
+        alert("A senha não é válida!")
+        return
+      }
+
       console.log(dadosUsuario)
 
     }
@@ -33,6 +39,13 @@ function App() {
 
     function isSenhasDiferentes(senha: string, confirmaSenha: string){
       return (senha != confirmaSenha)
+    }
+
+    function checarSenhaValida(senha: string): boolean {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+      console.log(regex.test(senha));
+      return !regex.test(senha);
+      
     }
 
   return (
