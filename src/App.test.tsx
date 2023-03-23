@@ -82,7 +82,7 @@ describe('RegisterTest', () => {
 
       expect(window.alert).toHaveBeenCalledWith('O nome inserido é muito pequeno!');
     });
-    it('testa se o nome ', () => {
+    it('testa se o nome esta ok', () => {
       window.alert = jest.fn()
       render(<App />);
       const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
@@ -95,6 +95,40 @@ describe('RegisterTest', () => {
       fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
       fireEvent.change(senhaInput, { target: { value: 'senha' } })
       fireEvent.change(confirmaSenhaInput, { target: { value: 'senha' } })
+      fireEvent.click(botaoRegistrar)
+
+      expect(window.alert).not.toHaveBeenCalledWith();
+    });
+    it('testa se as senhas sao diferentes, sendo diferentes', () => {
+      window.alert = jest.fn()
+      render(<App />);
+      const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+      fireEvent.change(nomeInput, { target: { value: 'Jorge Cambalhota' } })
+      fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+      fireEvent.change(senhaInput, { target: { value: 'senha123' } })
+      fireEvent.change(confirmaSenhaInput, { target: { value: 'senha' } })
+      fireEvent.click(botaoRegistrar)
+
+      expect(window.alert).toHaveBeenCalledWith('As senhas não coincidem!');
+    });
+    it('testa se as senhas sao diferentes, sendo iguais', () => {
+      window.alert = jest.fn()
+      render(<App />);
+      const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+      fireEvent.change(nomeInput, { target: { value: 'Jorge Cambalhota' } })
+      fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+      fireEvent.change(senhaInput, { target: { value: 'senha123' } })
+      fireEvent.change(confirmaSenhaInput, { target: { value: 'senha123' } })
       fireEvent.click(botaoRegistrar)
 
       expect(window.alert).not.toHaveBeenCalledWith();
