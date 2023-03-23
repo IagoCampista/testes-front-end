@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
+import LogIn from './LogIn';
 
 // test('renderiza tudo sem crash', () => {
 //   render(<App />);
@@ -37,7 +38,7 @@ describe('RegisterTest', () => {
       const emailInput = screen.getByTestId('email') as HTMLInputElement;
       const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
       const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
-      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
 
       fireEvent.change(nomeInput, { target: { value: '' } })
       fireEvent.change(emailInput, { target: { value: '' } })
@@ -188,4 +189,38 @@ describe('RegisterTest', () => {
     expect(window.alert).not.toHaveBeenCalledWith();
     });
     
+})
+
+describe('LogInTest', () => {
+  it('testa se o os campos de login estão em branco', () => {
+      render(<LogIn />);
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const botaoEntrar = screen.getByTestId('botaoEntrar') as HTMLButtonElement;
+
+      fireEvent.change(emailInput, { target: { value: '' } })
+      fireEvent.change(senhaInput, { target: { value: '' } })
+      fireEvent.click(botaoEntrar)
+
+      // confere se o botao de entrar ainda está na tela, confirmando que não houve sucesso no login e o usuário ainda esta na tela de login
+      expect(botaoEntrar).toBeInTheDocument();
+      
+      
+      //email digitado mas senha nao
+      fireEvent.change(emailInput, { target: { value: 'email@email.com' } })
+      fireEvent.change(senhaInput, { target: { value: '' } })
+      fireEvent.click(botaoEntrar)
+
+      // confere se o botao de entrar ainda está na tela, confirmando que não houve sucesso no login e o usuário ainda esta na tela de login
+      expect(botaoEntrar).toBeInTheDocument();
+
+
+      //senha digitado mas email nao
+      fireEvent.change(emailInput, { target: { value: '' } })
+      fireEvent.change(senhaInput, { target: { value: 'SenhaValida123' } })
+      fireEvent.click(botaoEntrar)
+
+      // confere se o botao de entrar ainda está na tela, confirmando que não houve sucesso no login e o usuário ainda esta na tela de login
+      expect(botaoEntrar).toBeInTheDocument();
+    });
 })
