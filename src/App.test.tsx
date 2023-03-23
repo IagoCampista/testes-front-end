@@ -48,5 +48,56 @@ describe('RegisterTest', () => {
       // confere se o botao de registro ainda está na tela, confirmando que não houve sucesso no cadastro e o usuário ainda esta na tela de registro
       expect(botaoRegistrar).toBeInTheDocument();
     });
+    it('testa se o nome é pequeno', () => {
+      window.alert = jest.fn()
+      render(<App />);
+      const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+      fireEvent.change(nomeInput, { target: { value: 'alo' } })
+      fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+      fireEvent.change(senhaInput, { target: { value: 'senha' } })
+      fireEvent.change(confirmaSenhaInput, { target: { value: 'senha' } })
+      fireEvent.click(botaoRegistrar)
+
+      expect(window.alert).toHaveBeenCalledWith('O nome inserido é muito pequeno!');
+    });
+    it('testa se o nome tem menos de 2 palavras', () => {
+      window.alert = jest.fn()
+      render(<App />);
+      const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+      fireEvent.change(nomeInput, { target: { value: 'alooiss' } })
+      fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+      fireEvent.change(senhaInput, { target: { value: 'senha' } })
+      fireEvent.change(confirmaSenhaInput, { target: { value: 'senha' } })
+      fireEvent.click(botaoRegistrar)
+
+      expect(window.alert).toHaveBeenCalledWith('O nome inserido é muito pequeno!');
+    });
+    it('testa se o nome ', () => {
+      window.alert = jest.fn()
+      render(<App />);
+      const nomeInput = screen.getByTestId('nome') as HTMLInputElement;
+      const emailInput = screen.getByTestId('email') as HTMLInputElement;
+      const senhaInput = screen.getByTestId('senha') as HTMLInputElement;
+      const confirmaSenhaInput = screen.getByTestId('confirmaSenha') as HTMLInputElement;
+      const botaoRegistrar = screen.getByTestId('botaoRegistrar') as HTMLButtonElement;
+
+      fireEvent.change(nomeInput, { target: { value: 'Jorge Cambalhota' } })
+      fireEvent.change(emailInput, { target: { value: 'alo123@gmail.com' } })
+      fireEvent.change(senhaInput, { target: { value: 'senha' } })
+      fireEvent.change(confirmaSenhaInput, { target: { value: 'senha' } })
+      fireEvent.click(botaoRegistrar)
+
+      expect(window.alert).not.toHaveBeenCalledWith();
+    });
     
 })

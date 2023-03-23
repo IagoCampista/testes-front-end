@@ -12,8 +12,17 @@ function App() {
 
     function handleSubmit(event: any){
       event.preventDefault()
+      if (!checarNome(dadosUsuario.nome)){
+        alert("O nome inserido é muito pequeno!")
+        return
+      }
       console.log(dadosUsuario)
 
+    }
+
+    function checarNome(nome: string){
+      const NomeSeparado = nome.trim().split(/\s+/);
+      return ((nome.length >3 ) && (NomeSeparado.length > 1))
     }
 
   return (
