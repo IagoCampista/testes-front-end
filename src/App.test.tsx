@@ -133,5 +133,26 @@ describe('RegisterTest', () => {
 
       expect(window.alert).not.toHaveBeenCalledWith();
     });
+
+    it('testa se o email é valido', () => {
+    render(<App />);
+    const emailInput = screen.getByTestId('email') as HTMLInputElement;
+    
+    fireEvent.change(emailInput, { target: { value: 'emailinvalido' } });       
+    expect(emailInput.validity.valid).toBeFalsy();
+
+    fireEvent.change(emailInput, { target: { value: 'emailinvalido@' } });   
+    expect(emailInput.validity.valid).toBeFalsy();
+
+    fireEvent.change(emailInput, { target: { value: '@emailinvalido' } });   
+    expect(emailInput.validity.valid).toBeFalsy();
+
+    fireEvent.change(emailInput, { target: { value: 'emailinvaalido' } });   
+    expect(emailInput.validity.valid).toBeFalsy();
+
+    fireEvent.change(emailInput, { target: { value: 'emailvalido@email.com' } });   
+    expect(emailInput.validity.valid).toBeTruthy();
+
+    });
     
 })
